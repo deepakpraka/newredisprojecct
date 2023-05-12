@@ -28,11 +28,24 @@ const myfunction= async()=>{
 
 
     const response = await axios.request(options);
-    await redisClient.set('actorsawards',JSON.stringify(response.data))
+    const data = await redisClient.set('actorsawards',JSON.stringify(response.data))
+    console.log(data)
+    
+} 
+    const storedata = async()=>{
+
     const data = await redisClient.get('actorsawards')
+
     if(!data) throw Error('data from redis is null')
+
+
     const cachedData = JSON.parse(data)
-    // filter function
+    console.log(data)
+
+
+    
+  // retrieve data
+
     const filtered = cachedData?.resource?.awards.filter(( value:any) => value.year === 2005 )
     console.log(filtered)
 
@@ -54,26 +67,9 @@ const myfunction= async()=>{
     
     redisClient.end()
    
-    
-//     const string = ["rhys meyers","ride with the devil","steerpike","1997"]
-//   const filter = string.filter(value =>{
-//     console.log(value);
-//   })
-//  const text = "RhysMeyers";
-//     const length = text.length;
-//     console.log(text.length);
-//     var name = "miniBios";
- 
-// var newName = Array.prototype.map.call(name, function(item) {
-//     return item + 'd';
-// })
-//  console.log(newName)
-//  const years=[1997,1998,1999,2000];
-// years.reduce(function (previousVal, currentVal) {
-//   console.log("previousVal", previousVal);
-//   console.log("currentval", currentVal);
-//    return previousVal + currentVal;
-// })
-}
+ }
 
 myfunction()
+storedata()
+
+
